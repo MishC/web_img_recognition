@@ -22,7 +22,14 @@ class App extends Component {
       dataBox: [],
       route: "signin",
       isSignedIn: false,
+      user: { id: "", name: "", email: "", entries: 0, joined: "" },
+      count: 0,
     };
+  }
+  componentDidMount() {
+    fetch("http://localhost:3000")
+      .then((response) => response.json())
+      .then(console.log);
   }
   onRouteChange = (route) => {
     if (route === "signout") {
@@ -72,20 +79,49 @@ class App extends Component {
         requestOptions
       )
         .then((response) => response.text())
+
         .then((result) => {
           //  console.log(JSON.parse(result, null, 2).outputs[0].data.regions);
 
           this.setState({
             dataBox: JSON.parse(result, null, 2).outputs[0].data.regions,
           });
+          this.setState({ count: this.state.count + 1 });
+          this.setState(
+            Object.assign(this.state.user, { entries: this.state.count })
+          );
         })
+        .then((response) => {
+          console.log("hi", response);
+          if (response) {
+            fetch("http://localhost:3000/image", {
+              method: "put",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                id: this.state.user.id,
+              }),
+            });
+          }
+        })
+
         .catch((error) => console.log("error", error));
     } else {
       return null;
     }
-    /****************************/
   };
-
+  /****************************/
+  loadUser = (data) => {
+    this.setState({
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined,
+      },
+    });
+  };
+  /*********************/
   render() {
     const { imageUrl, dataBox, isSignedIn, route } = this.state;
     return (
@@ -105,12 +141,17 @@ class App extends Component {
               imageUrl={imageUrl}
               dataBox={dataBox}
               image={document.getElementById("inputimage")}
+              name={this.state.user.name}
+              entries={this.state.user.entries}
             />
           </div>
         ) : this.state.route === "signin" ? (
-          <Signin onRouteChange={this.onRouteChange} />
+          <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
         ) : (
-          <Register onRouteChange={this.onRouteChange} />
+          <Register
+            onRouteChange={this.onRouteChange}
+            loadUser={this.loadUser}
+          />
         )}
       </div>
     );
