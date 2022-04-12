@@ -11,6 +11,16 @@ import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import Particles from "react-tsparticles";
 import particlesOptions from "./particles.json";
 import FaceDetection from "./components/FaceDetection/FaceDetection";
+const initialState = {
+  input: " ",
+  imageUrl: "",
+
+  dataBox: [],
+  route: "signin",
+  isSignedIn: false,
+  user: { id: "", name: "", email: "", entries: 0, joined: "" },
+  count: 0,
+};
 
 class App extends Component {
   constructor() {
@@ -33,7 +43,7 @@ class App extends Component {
   }
   onRouteChange = (route) => {
     if (route === "signout") {
-      this.setState({ isSignedIn: false });
+      this.setState(initialState);
     } else if (route === "home") {
       this.setState({ isSignedIn: true });
     }
