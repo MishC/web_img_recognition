@@ -3,7 +3,7 @@ import "./ImageLinkForm.css";
 const ImageLinkForm = ({ onInputChange, onButtonSubmit }) => {
   return (
     <div className="ImageLinkForm mt5">
-      <p className="f3">
+      <p className="f5">
         This magic brain will detect faces in your picture. Give it a try!
       </p>
       <div className="center f4 pa2 ">

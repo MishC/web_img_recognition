@@ -58,7 +58,7 @@ class Register extends React.Component {
     }
   };
   render() {
-    const { fail } = this.state;
+    const { fail, double } = this.state;
     return (
       <div className="Register center">
         <article className="br3 ba b--black-10 mv4 w-200 w-100-m w-200-l mw6 shadow-5 center">
@@ -84,7 +84,7 @@ class Register extends React.Component {
                   </label>
                   <input
                     className="pa2 input-reset ba hover-bg-black hover-white w-100 "
-                    minlength="5"
+                    minLength="5"
                     type="email"
                     name="email-address"
                     id="email-address"
@@ -99,7 +99,7 @@ class Register extends React.Component {
 
                   <input
                     className="b br3 pa2 input-reset ba  hover-bg-black hover-white w-100"
-                    minlength="8"
+                    minLength="8"
                     type="password"
                     name="password"
                     id="password"
@@ -121,7 +121,7 @@ class Register extends React.Component {
                 </p>
               ) : this.state.name === "Unknown" ? (
                 <p className="f4 mt5">Please add name.</p>
-              ) : this.state.double === true ? (
+              ) : double ? (
                 <div>
                   <p className="f4 mt5">
                     You are already registred. Did you forget your password?

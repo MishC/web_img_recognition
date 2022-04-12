@@ -4,10 +4,7 @@ import Rank from "../Rank/Rank";
 import "./FaceDetection.css";
 
 const FaceDetection = ({ imageUrl, dataBox, image, name, entries }) => {
-  if (dataBox) {
-    console.log(dataBox.length);
-    console.log(name);
-
+  if (dataBox && name) {
     return (
       <div className="FaceDetection center mv5">
         <div className="mv1  white f3 ">
