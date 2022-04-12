@@ -3,7 +3,7 @@ import "./Signin.css";
 class Signin extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { signInEmail: "", signInPassword: "" };
+    this.state = { signInEmail: "", signInPassword: "", fail: false };
   }
   onEmailChange = (event) => {
     this.setState({ signInEmail: event.target.value });
@@ -25,6 +25,8 @@ class Signin extends React.Component {
         if (user.id) {
           this.props.loadUser(user);
           this.props.onRouteChange("home");
+        } else {
+          this.props.onRouteChange("fail");
         }
       });
   };

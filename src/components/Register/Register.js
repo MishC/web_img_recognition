@@ -2,7 +2,13 @@ import React from "react";
 class Register extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { email: "", password: "", name: "" };
+    this.state = {
+      email: "",
+      password: "",
+      name: "",
+      fail: false,
+      double: false,
+    };
   }
   onNameChange = (event) => {
     this.setState({ name: event.target.value });
@@ -15,29 +21,48 @@ class Register extends React.Component {
   };
 
   onSubmitSignIn = () => {
-    fetch("http://localhost:3000/register", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: this.state.name,
-        email: this.state.email,
-        password: this.state.password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((user) => {
-        if (user) {
-          this.props.loadUser(user);
-          this.props.onRouteChange("home");
-        }
-      });
+    let emailLength = this.state.email.length;
+    if (
+      this.state.password.length < 8 ||
+      this.state.email < 6 ||
+      !this.state.email.includes("@") ||
+      !this.state.email.slice(emailLength - 5, emailLength).includes(".")
+    ) {
+      this.setState({ fail: true });
+      console.log("Fail email or password");
+    } else if (this.state.name === "" || this.state.name === "Unknown") {
+      this.setState({ name: "Unknown" });
+    } else {
+      fetch("http://localhost:3000/register", {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+
+        body: JSON.stringify({
+          name: this.state.name,
+          email: this.state.email,
+          password: this.state.password,
+        }),
+      })
+        .then((response) => response.json())
+        .then((user) => {
+          if (user) {
+            this.props.loadUser(user);
+            if (user === "unable to register") {
+              this.props.onRouteChange("register");
+              this.setState({ double: true });
+            } else {
+              this.props.onRouteChange("home");
+            }
+          }
+        });
+    }
   };
   render() {
-    //const { onRouteChange } = this.props;
+    const { fail } = this.state;
     return (
       <div className="Register center">
         <article className="br3 ba b--black-10 mv4 w-200 w-100-m w-200-l mw6 shadow-5 center">
-          <main className="pa4 black-80">
+          <main className="pa6 black-80">
             <div className="measure">
               <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                 <legend className="f1 fw6 ph0 mh0">Register</legend>
@@ -59,6 +84,7 @@ class Register extends React.Component {
                   </label>
                   <input
                     className="pa2 input-reset ba hover-bg-black hover-white w-100 "
+                    minlength="5"
                     type="email"
                     name="email-address"
                     id="email-address"
@@ -73,6 +99,7 @@ class Register extends React.Component {
 
                   <input
                     className="b br3 pa2 input-reset ba  hover-bg-black hover-white w-100"
+                    minlength="8"
                     type="password"
                     name="password"
                     id="password"
@@ -85,9 +112,30 @@ class Register extends React.Component {
                   onClick={this.onSubmitSignIn}
                   className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                   type="submit"
-                  value="Sign in"
+                  value="Register"
                 />
               </div>
+              {fail === true ? (
+                <p className="f4 mt5">
+                  Email must be valid. Password must have at least 8 signs.
+                </p>
+              ) : this.state.name === "Unknown" ? (
+                <p className="f4 mt5">Please add name.</p>
+              ) : this.state.double === true ? (
+                <div>
+                  <p className="f4 mt5">
+                    You are already registred. Did you forget your password?
+                  </p>
+                  <div
+                    className="f3 link dim black underline pointer  pa3 mt3 mr3"
+                    onClick={() => this.props.onRouteChange("signin")}
+                  >
+                    Sign in
+                  </div>
+                </div>
+              ) : (
+                <div></div>
+              )}
             </div>
           </main>
         </article>
