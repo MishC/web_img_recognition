@@ -145,8 +145,16 @@ class App extends Component {
               entries={this.state.user.entries}
             />
           </div>
-        ) : this.state.route === "signin" ? (
+        ) : route === "signin" ? (
           <Signin onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
+        ) : route === "fail" ? (
+          <div>
+            <Signin
+              onRouteChange={this.onRouteChange}
+              loadUser={this.loadUser}
+            />
+            <p className="f4 black">! Wrong password or email !</p>
+          </div>
         ) : (
           <Register
             onRouteChange={this.onRouteChange}

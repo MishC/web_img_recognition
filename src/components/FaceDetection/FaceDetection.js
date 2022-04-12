@@ -6,6 +6,7 @@ import "./FaceDetection.css";
 const FaceDetection = ({ imageUrl, dataBox, image, name, entries }) => {
   if (dataBox) {
     console.log(dataBox.length);
+    console.log(name);
 
     return (
       <div className="FaceDetection center mv5">
@@ -27,7 +28,6 @@ const FaceDetection = ({ imageUrl, dataBox, image, name, entries }) => {
             className="mb6 center"
           />
           {dataBox.map((item, index) => {
-            console.log(image.width);
             if (image.width) {
               return (
                 <div
