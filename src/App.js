@@ -106,7 +106,10 @@ class App extends Component {
           if (response) {
             fetch("http://localhost:3000/image", {
               method: "put",
-              headers: { "Content-Type": "application/json" },
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
               body: JSON.stringify({
                 id: this.state.user.id,
               }),
@@ -146,13 +149,13 @@ class App extends Component {
             <ImageLinkForm
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit}
+              name={this.state.user.name}
+              entries={this.state.user.entries}
             />
             <FaceDetection
               imageUrl={imageUrl}
               dataBox={dataBox}
               image={document.getElementById("inputimage")}
-              name={this.state.user.name}
-              entries={this.state.user.entries}
             />
           </div>
         ) : route === "signin" ? (

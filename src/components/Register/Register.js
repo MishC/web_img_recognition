@@ -35,7 +35,10 @@ class Register extends React.Component {
     } else {
       fetch("http://localhost:3000/register", {
         method: "post",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
 
         body: JSON.stringify({
           name: this.state.name,

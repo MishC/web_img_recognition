@@ -3,14 +3,10 @@ import Rank from "../Rank/Rank";
 
 import "./FaceDetection.css";
 
-const FaceDetection = ({ imageUrl, dataBox, image, name, entries }) => {
+const FaceDetection = ({ imageUrl, dataBox, image }) => {
   if (dataBox) {
     return (
       <div className="FaceDetection center mv5">
-        <div className="mv1  white f3 ">
-          {`${name}, your current entry count is ${entries}. `}
-          <br />
-        </div>
         <div className="mv1">
           <Rank rank={dataBox.length} />
         </div>
