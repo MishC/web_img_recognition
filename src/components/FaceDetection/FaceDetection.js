@@ -33,9 +33,7 @@ const FaceDetection = ({ imageUrl, dataBox, image }) => {
                   top: item.region_info.bounding_box.top_row * image.height,
                   bottom:
                     image.height -
-                    item.region_info.bounding_box.bottom_row *
-                      image.height *
-                      0.5,
+                    item.region_info.bounding_box.bottom_row * image.height * 0,
                 }}
               ></div>
             );

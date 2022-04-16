@@ -36,11 +36,7 @@ class App extends Component {
       count: 0,
     };
   }
-  componentDidMount() {
-    fetch("http://localhost:3000")
-      .then((response) => response.json())
-      .then(console.log);
-  }
+
   onRouteChange = (route) => {
     if (route === "signout") {
       this.setState(initialState);
@@ -56,45 +52,23 @@ class App extends Component {
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
 
-    /******************************/
-    /*********************https://docs.clarifai.com/api-guide/predict/images*****************************/
-    const raw = JSON.stringify({
-      user_app_id: {
-        user_id: "",
-        app_id: "",
-      },
-      inputs: [
-        {
-          data: {
-            image: {
-              url: this.state.input,
-            },
-          },
-        },
-      ],
-    });
-
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        Authorization: "Key ",
-      },
-      body: raw,
-    };
-
     if (this.state.input) {
-      fetch(
-        "https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs",
-        requestOptions
-      )
-        .then((response) => response.text())
+      fetch("http://localhost:3000/imageurl", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          input: this.state.input,
+        }),
+      })
+        .then((response) => response.json())
 
-        .then((result) => {
-          //  console.log(JSON.parse(result, null, 2).outputs[0].data.regions);
-
+        .then((response) => {
+          //  console.log(response, "hi");
           this.setState({
-            dataBox: JSON.parse(result, null, 2).outputs[0].data.regions,
+            dataBox: response.outputs[0].data.regions,
           });
           this.setState({ count: this.state.count + 1 });
           this.setState(
@@ -102,7 +76,6 @@ class App extends Component {
           );
         })
         .then((response) => {
-          // console.log("hi", response);
           if (response) {
             fetch("http://localhost:3000/image", {
               method: "put",
