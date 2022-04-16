@@ -22,9 +22,12 @@ class Register extends React.Component {
 
   onSubmitSignIn = () => {
     let emailLength = this.state.email.length;
+    let result = !!this.state.email.match(/[,:!?]/);
+    //console.log(result);
     if (
       this.state.password.length < 8 ||
       this.state.email < 6 ||
+      result ||
       !this.state.email.includes("@") ||
       !this.state.email.slice(emailLength - 5, emailLength).includes(".")
     ) {
@@ -127,7 +130,7 @@ class Register extends React.Component {
               ) : double ? (
                 <div>
                   <p className="f4 mt5">
-                    You are already registred. Did you forget your password?
+                    You are already registered. Did you forget your password?
                   </p>
                   <div
                     className="f3 link dim black underline pointer  pa3 mt3 mr3"
