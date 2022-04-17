@@ -1,10 +1,15 @@
 import React from "react";
 import "./ImageLinkForm.css";
 const ImageLinkForm = ({ onInputChange, onButtonSubmit, name, entries }) => {
+  const nameUpper = name
+    .split()
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
   return (
     <div className="ImageLinkForm mt5">
       <div className="mv1  white f3 ">
-        {`${name}, your current entry count is ${entries}. `}
+        {`${nameUpper}, your current entry count is ${entries}. `}
         <br />
       </div>
 

@@ -22,12 +22,14 @@ class Register extends React.Component {
 
   onSubmitSignIn = () => {
     let emailLength = this.state.email.length;
-    let result = !!this.state.email.match(/[,:!?]/);
-    //console.log(result);
+    let resultEmail = !!this.state.email.match(/[,:!?]/);
+    let resultName = !!this.state.name.match(/[,:!?.]/);
+
     if (
       this.state.password.length < 8 ||
       this.state.email < 6 ||
-      result ||
+      resultEmail ||
+      resultName ||
       !this.state.email.includes("@") ||
       !this.state.email.slice(emailLength - 5, emailLength).includes(".")
     ) {
