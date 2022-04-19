@@ -69,7 +69,7 @@ class App extends Component {
           this.setState({
             dataBox: response.outputs[0].data.regions,
           });
-          this.setState({ count: this.state.count + 1 });
+          this.setState({ count: this.state.user.entries + 1 });
           this.setState(
             Object.assign(this.state.user, { entries: this.state.count })
           );
