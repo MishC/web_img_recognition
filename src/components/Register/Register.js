@@ -38,7 +38,7 @@ class Register extends React.Component {
     } else if (this.state.name === "" || this.state.name === "Unknown") {
       this.setState({ name: "Unknown" });
     } else {
-      fetch("http://localhost:3000/register", {
+      fetch("https://rocky-atoll-30592.herokuapp.com/register", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
