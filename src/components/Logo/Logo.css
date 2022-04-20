@@ -1,3 +1,6 @@
-.Tilt {
+/*.Tilt {
   background: linear-gradient(-225deg, #ff057c 0%, #7c64d5 48%, #4cc3ff 100%);
+}*/
+.invert {
+  filter: invert(100%);
 }

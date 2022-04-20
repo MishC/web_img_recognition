@@ -1,6 +1,7 @@
 .App {
   text-align: center;
   color: #ffffff;
+  margin: 30px;
 }
 .center {
   display: flex;

@@ -1,1 +1,5 @@
-
+@media (max-width: 479px) {
+  .dn-s {
+    display: none;
+  }
+}

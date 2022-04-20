@@ -5,17 +5,17 @@ const ImageLinkForm = ({ onInputChange, onButtonSubmit, name, entries }) => {
     .split()
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
-
+  console.log(entries);
   return (
     <div className="ImageLinkForm mt5">
-      <div className="mv1  white f3 ">
+      <div className="mb3  white f3 ">
         {`${nameUpper}, your current entry count is ${entries}. `}
         <br />
       </div>
-
-      <p className="f4 black">
-        This magic brain will detect faces in your picture. Give it a try!
+      <p className="f4 mt0 black ml0 dn-ns ttc">
+        Magic brain will detect faces in your picture. Give it a try!
       </p>
+
       <div className="center f4 pa2 ">
         <div className=" form pa4 br3 shadow-5 center ">
           <input

@@ -13,7 +13,11 @@ const Navigation = ({ onRouteChange, isSignedIn }) => {
           <div>
             {" "}
             <Logo />
-          </div>
+          </div>{" "}
+          <p className="f4 mt6 black ml0 dn-s ttc">
+            <span className=" f3 white "> Magic brain</span> <br />
+            will detect faces in your picture. Give it a try!
+          </p>
           <div
             className="f3 link dim black underline pointer  pa3 mt3 mr3"
             onClick={() => onRouteChange("signout")}

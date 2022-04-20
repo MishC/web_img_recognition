@@ -24,23 +24,30 @@ const initialState = {
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      input: " ",
-      imageUrl: "",
-
-      dataBox: [],
-      route: "signin",
-      isSignedIn: false,
-      user: { id: "", name: "", email: "", entries: 0, joined: "" },
-      count: 0,
-    };
+    this.state = initialState;
   }
+  /****************************/
+  loadUser = (data) => {
+    this.setState({
+      user: {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        entries: data.entries,
+        joined: data.joined,
+      },
+    });
+    console.log(this.state.user);
+  };
+  /*********************/
 
   onRouteChange = (route) => {
     if (route === "signout") {
       this.setState(initialState);
     } else if (route === "home") {
       this.setState({ isSignedIn: true });
+
+      this.setState({ count: this.state.user.entries });
     }
     this.setState({ route: route });
   };
@@ -65,13 +72,14 @@ class App extends Component {
         .then((response) => response.json())
 
         .then((response) => {
-          //  console.log(response, "hi");
           this.setState({
             dataBox: response.outputs[0].data.regions,
           });
-          this.setState({ count: this.state.user.entries + 1 });
+          this.setState({ count: parseInt(this.state.count) + 1 });
           this.setState(
-            Object.assign(this.state.user, { entries: this.state.count })
+            Object.assign(this.state.user, {
+              entries: parseInt(this.state.count),
+            })
           );
         })
         .then((response) => {
@@ -88,25 +96,12 @@ class App extends Component {
             });
           }
         })
-
-        .catch((error) => console.log("error", error));
+        .catch((err) => console.log(err));
     } else {
       return null;
     }
   };
-  /****************************/
-  loadUser = (data) => {
-    this.setState({
-      user: {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        entries: data.entries,
-        joined: data.joined,
-      },
-    });
-  };
-  /*********************/
+
   render() {
     const { imageUrl, dataBox, isSignedIn, route } = this.state;
     return (
