@@ -37,7 +37,7 @@ class App extends Component {
         joined: data.joined,
       },
     });
-    console.log(this.state.user);
+    this.setState({ count: this.state.entries });
   };
   /*********************/
 
@@ -57,6 +57,7 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
+    console.log(this.state.user.entries);
 
     if (this.state.input) {
       fetch("https://rocky-atoll-30592.herokuapp.com/imageurl", {
@@ -75,26 +76,29 @@ class App extends Component {
           this.setState({
             dataBox: response.outputs[0].data.regions,
           });
-          this.setState({ count: parseInt(this.state.count) + 1 });
-          this.setState(
+          /* this.setState(
             Object.assign(this.state.user, {
-              entries: parseInt(this.state.count),
+              entries: parseInt(this.state.count) + 1,
             })
-          );
+          );*/
         })
+
         .then((response) => {
-          if (response) {
-            fetch("https://rocky-atoll-30592.herokuapp.com/image", {
-              method: "put",
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-              },
-              body: JSON.stringify({
-                id: this.state.user.id,
-              }),
-            });
-          }
+          fetch("https://rocky-atoll-30592.herokuapp.com/image", {
+            method: "put",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify({
+              id: this.state.user.id,
+            }),
+          })
+            .then((response) => response.json())
+            .then((count) => {
+              this.setState(Object.assign(this.state.user, { entries: count }));
+            })
+            .catch(console.log);
         })
         .catch((err) => console.log(err));
     } else {
